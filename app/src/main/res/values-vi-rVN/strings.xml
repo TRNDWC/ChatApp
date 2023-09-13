@@ -3,5 +3,15 @@
     <string name="home">Trang chu</string>
     <string name="favorite">Yeu thich</string>
     <string name="splash">Bắn tung tóe</string>
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="todo">TODO</string>
+    <string name="log_in">Log in</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="don_t_have_account">Don\'t have account? </string>
+    <string name="sign_up">Sign Up</string>
+    <string name="your_name">YOUR NAME</string>
+    <string name="i_agee_to_the_terms_of_service_and_privacy_policy">I agee to the Terms of Service and Privacy Policy</string>
+    <string name="have_an_account_log_in">Have an account? Log in</string>
 
 </resources>

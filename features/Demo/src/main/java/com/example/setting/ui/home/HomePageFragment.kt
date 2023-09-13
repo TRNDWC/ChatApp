@@ -94,10 +94,6 @@ class HomePageFragment :
     override fun setOnClick() {
         super.setOnClick()
 
-        binding.btn.setOnSafeClickListener {
-            appNavigation.openDemoViewPager()
-        }
-
         binding.btnDialog.setOnSafeClickListener {
             if (childFragmentManager.findFragmentByTag(DemoDialogFragmentTag) == null) {
                 val demoDialog = DemoDialogFragment()
