@@ -1,5 +1,6 @@
 package com.example.baseproject.container
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
@@ -7,6 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.baseproject.R
 import com.example.baseproject.databinding.ActivityMainBinding
 import com.example.baseproject.navigation.AppNavigation
+import com.example.baseproject.utils.LanguageConfig
+import com.example.baseproject.utils.SharedPrefs
 import com.example.core.base.BaseActivityNotRequireViewModel
 import com.example.core.pref.RxPreferences
 import com.example.core.utils.NetworkConnectionManager
@@ -32,6 +35,8 @@ class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>(), Dem
     @Inject
     lateinit var rxPreferences: RxPreferences
 
+    var sharedPreferences: SharedPrefs? = null
+
     override val layoutId = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +45,6 @@ class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>(), Dem
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host) as NavHostFragment
         appNavigation.bind(navHostFragment.navController)
-
-        lifecycleScope.launch {
-            val language = rxPreferences.getLanguage().first()
-            language?.let { setLanguage(it) }
-        }
 
         networkConnectionManager.isNetworkConnectedFlow
             .onEach {
@@ -55,6 +55,13 @@ class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>(), Dem
                 }
             }
             .launchIn(lifecycleScope)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        sharedPreferences = SharedPrefs(newBase!!)
+        val languageCode: String = sharedPreferences!!.locale
+        val context: Context = LanguageConfig.changeLanguage(newBase, languageCode)
+        super.attachBaseContext(context)
     }
 
     override fun onStart() {

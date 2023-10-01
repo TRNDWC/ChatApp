@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <string name="app_name">BaseProject</string>
+    <string name="app_name" translatable="false">BaseProject</string>
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="splash">Splash</string>
@@ -13,5 +15,45 @@
     <string name="your_name">YOUR NAME</string>
     <string name="i_agee_to_the_terms_of_service_and_privacy_policy">I agee to the Terms and Privacy Policy</string>
     <string name="have_an_account_log_in">Have an account? Log in</string>
+    <string name="invalid_email_address">invalid email address</string>
+    <string name="do_not_leave_this_field_blank">do not leave this field blank</string>
+    <string name="please_enter_your_email_address">Please enter your email address</string>
+    <string name="password_must_be_at_least_8_characters">Password must be at least 8 characters</string>
+    <string name="please_enter_your_password">Please enter your password</string>
+    <string name="login_successfully">Login Successfully</string>
+    <string name="email_is_not_registered">Email is not registered</string>
+    <string name="email_or_password_is_empty">Email or password is empty</string>
+    <string name="password_is_incorrect">Password is incorrect</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="login_failed">Login failed</string>
+    <string name="email_already_exists">Email already exists</string>
+    <string name="sign_up_failed">Please enter your name</string>
+    <string name="sign_up_successfully">Sign up successfully</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="message">Message</string>
+    <string name="friends">Friends</string>
+    <string name="profile">Profile</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="notification">Notification</string>
+    <string name="version">Version</string>
+    <string name="_1_0_0">1.0.0</string>
+    <string name="log_out">Log out</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="birth_day">Birth day</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="this_chat_app_privacy_policy">This chat app Privacy Policy.</string>
+    <string name="this_chat_app_terms_and_conditions">This chat app Terms and Conditions.</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="terms">Terms</string>
+    <string name="all">All</string>
+    <string name="requests">Requests</string>
+    <string name="search_friends_here">Search friends here</string>
+
 
 </resources>

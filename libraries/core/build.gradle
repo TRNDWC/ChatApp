@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -43,6 +44,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation libraries.hilt
+    implementation 'com.google.firebase:firebase-database:20.2.2'
+    implementation 'com.google.firebase:firebase-auth:22.1.2'
     kapt libraries.hiltSupport
     //implementation libraries.hiltViewModel
     //kapt libraries.hiltCompiler

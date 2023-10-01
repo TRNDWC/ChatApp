@@ -22,7 +22,6 @@ class SplashFragment :
 
     override fun bindingAction() {
         super.bindingAction()
-
         viewModel.actionSPlash.observe(viewLifecycleOwner) {
             appNavigation.openSplashToLoginScreen()
         }
