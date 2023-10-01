@@ -7,6 +7,17 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <ProgressBar
+            android:id="@+id/ProgressBar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:indeterminateDrawable="@drawable/bg_progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
@@ -124,30 +135,33 @@
             app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
         <ImageButton
+            android:id="@+id/btnAgreeTermsOfService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/bg_button_check"
-            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etPassword"
-            android:layout_marginHorizontal="10dp"/>
+            app:layout_constraintHorizontal_bias="0.1"
+            />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTermsOfService"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="10dp"
             android:text="@string/i_agee_to_the_terms_of_service_and_privacy_policy"
-            android:layout_marginTop="30dp"
             android:textColor="#999999"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAgreeTermsOfService"
             app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_button_login"
@@ -165,6 +179,7 @@
             app:layout_constraintVertical_bias="0.8" />
 
         <TextView
+            android:id="@+id/tvHaveAnAccountLogIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"

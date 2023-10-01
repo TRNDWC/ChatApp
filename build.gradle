@@ -6,6 +6,7 @@ buildscript {
     }
     apply from: rootProject.file('dependencies.gradle')
     dependencies {
+        classpath 'com.google.gms:google-services:4.4.0'
         classpath libraries.androidGradle
         classpath libraries.kotlinGradle
         classpath libraries.hiltGradle

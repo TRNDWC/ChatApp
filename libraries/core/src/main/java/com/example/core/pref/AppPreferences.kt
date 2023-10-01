@@ -29,6 +29,14 @@ class AppPreferences @Inject constructor(
         putValue(PreferencesKeys.PREF_PARAM_LANGUAGE, language)
     }
 
+    override fun getEmail(): Flow<String?> {
+        return getValue(PreferencesKeys.PREF_PARAM_LANGUAGE)
+    }
+
+    override suspend fun setEmail(email: String) {
+        putValue(PreferencesKeys.PREF_PARAM_LANGUAGE, email)
+    }
+
     override fun logout() {
 
     }
