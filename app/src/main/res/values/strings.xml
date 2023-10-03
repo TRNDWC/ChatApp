@@ -54,6 +54,13 @@
     <string name="all">All</string>
     <string name="requests">Requests</string>
     <string name="search_friends_here">Search friends here</string>
+    <string name="add_friend">Add</string>
+    <string name="request_sent">Added</string>
+    <string name="cancel_request">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="refuse">Refuse</string>
+    <string name="all_requests">All Requests</string>
+    <string name="sent_requests">Sent Requests</string>
 
 
 </resources>
