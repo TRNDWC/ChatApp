@@ -1,5 +1,6 @@
 package com.example.baseproject.ui.friend.adpater
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -8,18 +9,12 @@ import com.bumptech.glide.Glide
 import com.example.baseproject.R
 import com.example.baseproject.databinding.LayoutFriendsItemBinding
 import com.example.baseproject.model.FriendModel
-import com.example.baseproject.model.FriendState
-import com.example.baseproject.model.Profile
 
-interface OnFriendItemClicked {
-    fun onFriendItemClicked(friend: FriendModel)
-}
-
-class FriendTabAdapter(
+class SearchFriendAdapter(
     private var mFriendList: List<FriendModel>, private val onItemClickListener: OnFriendItemClicked
-) : RecyclerView.Adapter<FriendTabAdapter.FriendTabViewHolder>() {
+) : RecyclerView.Adapter<SearchFriendAdapter.SearchFriendViewHolder>() {
 
-    inner class FriendTabViewHolder(
+    inner class SearchFriendViewHolder(
         mFriendTabItem: LayoutFriendsItemBinding, onItemClickListener: OnFriendItemClicked
     ) : RecyclerView.ViewHolder(mFriendTabItem.root) {
         val friendName = mFriendTabItem.txtName
@@ -37,39 +32,32 @@ class FriendTabAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendTabViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchFriendViewHolder {
         val mFriendTabItem: LayoutFriendsItemBinding = LayoutFriendsItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return FriendTabViewHolder(mFriendTabItem, onItemClickListener)
+        return SearchFriendViewHolder(mFriendTabItem, onItemClickListener)
     }
 
     override fun getItemCount(): Int {
         return mFriendList.size
     }
 
-    override fun onBindViewHolder(holder: FriendTabViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchFriendViewHolder, position: Int) {
         val item = mFriendList[position]
-        if (position == 0 ||
-            getNameFirstChar(mFriendList[position].name) != getNameFirstChar(mFriendList[position - 1].name)
-        ) {
-            holder.friendFirstChar.visibility = ViewGroup.VISIBLE
-            holder.friendFirstChar.text = getNameFirstChar(item.name)
-        } else {
-            holder.friendFirstChar.visibility = ViewGroup.GONE
-        }
+        holder.friendFirstChar.visibility = ViewGroup.GONE
         holder.friendName.text = item.name
-        holder.friendImage.setImageResource(R.drawable.ic_profile)
-        if (item.profileImage?.equals("null") == false) {
+        if (item.profileImage.isNullOrEmpty()) {
+            holder.friendImage.setImageResource(R.drawable.ic_profile)
+        } else
             Glide.with(holder.itemView.context)
                 .load(item.profileImage.toUri())
                 .circleCrop()
                 .into(holder.friendImage)
-        }
     }
 
-    private fun getNameFirstChar(name: String): String {
-        val nameSplit = name.split(" ")
-        return nameSplit[nameSplit.size - 1][0].toString().uppercase()
+    fun setFiltedList(list: List<FriendModel>) {
+        mFriendList = list
+        notifyDataSetChanged()
     }
 }

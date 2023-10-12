@@ -1,9 +1,9 @@
 package com.example.baseproject.repository
 
 import androidx.lifecycle.MutableLiveData
+import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.Profile
 import com.example.baseproject.utils.Response
-import com.google.firebase.storage.StorageReference
 
 interface ProfileRepository {
     fun getProfile(): MutableLiveData<Response<Profile>>
@@ -13,5 +13,4 @@ interface ProfileRepository {
         nPhonenum: String?,
         nDOB: String?
     ): Response<Boolean>
-
 }

@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.baseproject.R
 import com.example.baseproject.databinding.LayoutRequestItemBinding
+import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.Profile
 
 interface OnRequestItemClicked {
-    fun onItemClicked(view: LayoutRequestItemBinding, profile: Profile)
-    fun onLongItemClicked(view: LayoutRequestItemBinding, profile: Profile)
+    fun onItemClicked(view: LayoutRequestItemBinding, item: FriendModel)
+    fun onLongItemClicked(view: LayoutRequestItemBinding, item: FriendModel)
 }
 
 class RequestTabAdapter(
-    private var mFriendList: MutableList<Profile>,
+    private var mFriendList: MutableList<FriendModel>,
     private val onRequestClickListener: OnRequestItemClicked,
     private val code: Int
 ) : RecyclerView.Adapter<RequestTabAdapter.RequestTabViewHolder>() {
@@ -68,10 +70,12 @@ class RequestTabAdapter(
         val item = mFriendList[position]
 
         holder.friendName.text = item.name
-        if (item.profilePictureUri != null) {
-            holder.friendImage.setImageURI(item.profilePictureUri.toUri())
-        } else {
-            holder.friendImage.setImageResource(R.drawable.ic_launcher_foreground)
+        holder.friendImage.setImageResource(R.drawable.ic_profile)
+        if (item.profileImage != null) {
+            Glide.with(holder.itemView.context)
+                .load(item.profileImage.toUri())
+                .circleCrop()
+                .into(holder.friendImage)
         }
         holder.txtChar.visibility = ViewGroup.GONE
         holder.view.visibility = ViewGroup.GONE

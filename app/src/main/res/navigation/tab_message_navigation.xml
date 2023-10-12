@@ -6,7 +6,7 @@
     app:startDestination="@id/messageFragment">
     <fragment
         android:id="@+id/messageFragment"
-        android:name="com.example.baseproject.ui.MessageFragment"
+        android:name="com.example.baseproject.ui.message.MessageFragment"
         android:label="fragment_message"
         tools:layout="@layout/fragment_message" />
 </navigation>

@@ -76,7 +76,7 @@ class ProfileFragment :
                     Glide.with(requireContext())
                         .load(response.data.profilePictureUri?.toUri())
                         .circleCrop()
-                        .into(binding.imageView)
+                        .into(binding.imgProfile)
 
 
                 }

@@ -2,22 +2,26 @@ package com.example.baseproject.ui.friend.adpater
 
 import android.graphics.Color
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.baseproject.R
 import com.example.baseproject.databinding.LayoutAllItemBinding
+import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.FriendState
 import com.example.baseproject.model.Profile
 
 interface OnAllItemClickListener {
-    fun onAllItemClicked(binding: LayoutAllItemBinding, profile: Profile)
-    fun onAllItemLongClicked(binding: LayoutAllItemBinding, profile: Profile)
+    fun onAllItemClicked(binding: LayoutAllItemBinding, friendModel: FriendModel)
+    fun onAllItemLongClicked(binding: LayoutAllItemBinding, friendModel: FriendModel)
 }
 
 class AllTabAdapter(
-    private var mProfileList: List<Profile>,
+    private var mProfileList: List<FriendModel>,
     private val onAllItemClickListener: OnAllItemClickListener
 ) : RecyclerView.Adapter<AllTabAdapter.AllTabViewHolder>() {
 
@@ -73,23 +77,50 @@ class AllTabAdapter(
         } else {
             holder.friendFirstChar.visibility = ViewGroup.GONE
         }
+
         holder.friendName.text = item.name
-        if (item.profilePictureUri != null) {
-            holder.friendImage.setImageURI(item.profilePictureUri.toUri())
-        } else {
-            holder.friendImage.setImageResource(R.drawable.ic_launcher_foreground)
+        holder.friendImage.setImageResource(R.drawable.ic_profile)
+        if (item.profileImage?.equals("null") == false) {
+            Glide.with(holder.itemView.context)
+                .load(item.profileImage.toUri())
+                .circleCrop()
+                .into(holder.friendImage)
         }
-        if (position % 2 == 0) {
-            holder.crdProgress.visibility = ViewGroup.GONE
-        } else {
-            holder.crdProgress.visibility = ViewGroup.VISIBLE
-            holder.crdProgress.isLongClickable = false
-            holder.barProgress.progressDrawable =
-                holder.itemView.context.getDrawable(R.drawable.custom_progressbar)
-            holder.btnAddFriend.text =
-                holder.itemView.context.getString(R.string.add_friend)
-            holder.btnAddFriend.setTextColor(Color.parseColor("#FFFFFF"))
+
+        holder.crdProgress.visibility = ViewGroup.GONE
+
+        Log.d("TAG", "onBindViewHolder: ${mProfileList[position]}")
+
+        when (mProfileList[position].state) {
+            FriendState.FRIEND -> {}
+
+            FriendState.RECEIVED -> {
+                holder.crdProgress.visibility = ViewGroup.VISIBLE
+                holder.btnAddFriend.text = holder.itemView.context.getString(R.string.accept)
+                holder.btnAddFriend.setTextColor(Color.parseColor("#FFFFFF"))
+                holder.barProgress.progressDrawable =
+                    holder.itemView.context.getDrawable(R.drawable.custom_progressbar)
+            }
+
+            FriendState.SENT -> {
+                holder.crdProgress.visibility = ViewGroup.VISIBLE
+                holder.btnAddFriend.text = holder.itemView.context.getString(R.string.request_sent)
+                holder.btnAddFriend.setTextColor(Color.parseColor("#FFFFFF"))
+                holder.barProgress.progressDrawable =
+                    holder.itemView.context.getDrawable(R.drawable.custom_progressbar)
+            }
+
+            else -> {
+                holder.crdProgress.visibility = ViewGroup.VISIBLE
+                holder.btnAddFriend.text = holder.itemView.context.getString(R.string.add_friend)
+                holder.btnAddFriend.setTextColor(Color.parseColor("#FFFFFF"))
+                holder.barProgress.progressDrawable =
+                    holder.itemView.context.getDrawable(R.drawable.custom_progressbar)
+                holder.crdProgress.isLongClickable = false
+            }
+
         }
+
     }
 
     private fun getNameFirstChar(name: String): String {

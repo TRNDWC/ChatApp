@@ -12,18 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentRequestBinding
 import com.example.baseproject.databinding.LayoutRequestItemBinding
+import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.FriendState
 import com.example.baseproject.model.Profile
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.OnRequestItemClicked
 import com.example.baseproject.ui.friend.adpater.RequestTabAdapter
+import com.example.baseproject.utils.Response
 import com.example.core.base.BaseFragment
 import com.example.core.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RequestFragment :
     BaseFragment<FragmentRequestBinding, FriendViewModel>(R.layout.fragment_request),
     OnRequestItemClicked {
 
-    private val viewModel: FriendViewModel by viewModels()
+    private val viewModel: FriendViewModel by viewModels({ requireParentFragment() })
     override fun getVM() = viewModel
     private lateinit var requestTabAdapter: RequestTabAdapter
 
@@ -47,45 +52,52 @@ class RequestFragment :
     }
 
     private fun setupRecyclerView() {
-        requestTabAdapter = RequestTabAdapter(
-            dummyData().toMutableList(), this, 66
-        )
+        viewModel.mFriendModelList.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Response.Success -> {
+                    val listRequest = response.data.filter {
+                        it.state == FriendState.RECEIVED
+                    }
+                    val listRequestSent = response.data.filter {
+                        it.state == FriendState.SENT
+                    }
+                    val list: MutableList<FriendModel> =
+                        (listRequest + listRequestSent) as MutableList<FriendModel>
+                    requestTabAdapter = RequestTabAdapter(list, this, listRequest.size)
+                    binding.recyclerViewReceivedRequest.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+                        adapter = requestTabAdapter
+                    }
+                }
 
-        binding.recyclerViewReceivedRequest.adapter = requestTabAdapter
+                is Response.Failure -> {
+                }
 
-        binding.recyclerViewReceivedRequest.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-    }
-
-    private fun dummyData(): MutableList<Profile> {
-        val list = mutableListOf<Profile>()
-        for (i in 'a'..'z') {
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
+                is Response.Loading -> {
+                }
+            }
         }
-        return list
     }
 
-    override fun onItemClicked(view: LayoutRequestItemBinding, profile: Profile) {
+
+    override fun onItemClicked(view: LayoutRequestItemBinding, item: FriendModel) {
         when (view.txtProgress.text) {
             getString(R.string.accept) -> {
-                requireContext().toast("Now you are friend with ${profile.name}")
+                viewModel.acceptFriend(item.id)
             }
+
             getString(R.string.cancel_request) -> {
-                requireContext().toast("Request canceled")
+                viewModel.rejectFriend(item.id)
             }
+
             else -> {
-                requireContext().toast("Request refused")
+                viewModel.rejectFriend(item.id)
             }
         }
         view.crdProgress.isClickable = false
     }
 
-    override fun onLongItemClicked(view: LayoutRequestItemBinding, profile: Profile) {
+    override fun onLongItemClicked(view: LayoutRequestItemBinding, item: FriendModel) {
         val btn = view.crdProgress
         val bar = view.progressBar
 

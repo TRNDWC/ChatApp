@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 1.0 is the initial position (i.e., 100% of the animation) and 0.0 is the final position (i.e., 0% of the animation). -->
+    <translate
+        android:duration="300"
+        android:fromYDelta="0%"
+        android:toYDelta="100%" />
+</set>

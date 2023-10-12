@@ -44,14 +44,14 @@
     <string name="vietnamese">Tiếng Việt</string>
     <string name="english">Tiếng Anh</string>
     <string name="terms_and_conditions">Điều khoản và điều kiện</string>
-    <string name="privacy_policy">Chính sách quyền riêng tư</string>
+    <string name="privacy_policy">chính sách bảo mật</string>
     <string name="this_chat_app_privacy_policy">Các chính sách bảo mật</string>
     <string name="this_chat_app_terms_and_conditions">Các điều khoản và điều kiện</string>
     <string name="terms_of_service">Điều khoản</string>
     <string name="terms">điều khoản</string>
     <string name="all">Tất cả</string>
     <string name="requests">Yêu cầu</string>
-    <string name="search_friends_here">Search friends here</string>
+    <string name="search_friends_here">Tìm kiếm bạn bè</string>
     <string name="add_friend">Kết bạn</string>
     <string name="request_sent">Đã gửi</string>
     <string name="cancel_request">Hủy</string>
@@ -59,4 +59,7 @@
     <string name="refuse">Từ chối</string>
     <string name="all_requests">Lời mời kết bạn</string>
     <string name="sent_requests">Đã gửi kết bạn</string>
+    <string name="messages">Tin nhắn</string>
+    <string name="search_messages_here">Tìm kiếm tin nhắn</string>
+    <string name="no_result_found">Không tìm thấy kết quả phù hợp</string>
 </resources>

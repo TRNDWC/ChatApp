@@ -86,6 +86,7 @@ class EditProfileFragment :
         binding.txSave.setOnClickListener {
             viewModel.updateProfile(
                 Profile(
+                    "",
                     name = binding.edtName.text.toString(),
                     profilePictureUri = viewModel.nAvatar.value,
                     email = "",

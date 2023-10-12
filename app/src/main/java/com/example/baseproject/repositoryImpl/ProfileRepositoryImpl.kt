@@ -3,11 +3,13 @@ package com.example.baseproject.repositoryImpl
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
+import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.Profile
 import com.example.baseproject.repository.ProfileRepository
 import com.example.baseproject.utils.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.values
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
@@ -23,13 +25,13 @@ class ProfileRepositoryImpl : ProfileRepository {
             .addValueEventListener(object : com.google.firebase.database.ValueEventListener {
                 override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
                     val profile = Profile(
+                        uid = auth.uid!!,
                         name = snapshot.child("display_name").value.toString(),
                         profilePictureUri = snapshot.child("profile_picture").value.toString(),
                         email = snapshot.child("email").value.toString(),
                         phoneNumber = snapshot.child("phone_number").value.toString(),
                         DOB = snapshot.child("DOB").value.toString()
                     )
-                    Log.d("ProfileRepositoryImpl", "onDataChange: ${profile.email} ${profile.name} ${profile.profilePictureUri} ")
                     profileResponse.postValue(Response.Success(profile))
                 }
 
@@ -59,12 +61,12 @@ class ProfileRepositoryImpl : ProfileRepository {
                 if (url != null) child("profile_picture").setValue(url)
                 child("phone_number").setValue(nPhonenum)
                 child("DOB").setValue(nDOB)
+                child("uid").setValue(auth.uid!!)
             }
             Response.Success(true)
         } catch (e: Exception) {
             Response.Failure(e)
         }
     }
-
 
 }
