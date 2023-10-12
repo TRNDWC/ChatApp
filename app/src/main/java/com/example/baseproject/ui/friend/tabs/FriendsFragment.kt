@@ -8,18 +8,23 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentFriendsBinding
+import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.FriendState
 import com.example.baseproject.model.Profile
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.FriendTabAdapter
 import com.example.baseproject.ui.friend.adpater.OnFriendItemClicked
+import com.example.baseproject.utils.Response
 import com.example.core.base.BaseFragment
 import com.example.core.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FriendsFragment :
     BaseFragment<FragmentFriendsBinding, FriendViewModel>(R.layout.fragment_friends),
     OnFriendItemClicked {
 
-    private val viewModel: FriendViewModel by viewModels()
+    private val viewModel: FriendViewModel by viewModels({ requireParentFragment() })
     override fun getVM() = viewModel
     private lateinit var friendTabAdapter: FriendTabAdapter
 
@@ -46,28 +51,29 @@ class FriendsFragment :
 
 
     private fun setupRecyclerView() {
-        friendTabAdapter = FriendTabAdapter(
-            dummyData(), this
-        )
-        binding.recyclerViewFriends.adapter = friendTabAdapter
-        binding.recyclerViewFriends.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-    }
+        viewModel.mFriendModelList.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Response.Success -> {
+//                    lọc ra những bạn bè đã chấp nhận
+                    val listFriend = response.data.filter {
+                        it.state == FriendState.FRIEND
+                    }
+                    friendTabAdapter = FriendTabAdapter(listFriend, this)
+                    binding.recyclerViewFriends.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+                        adapter = friendTabAdapter
+                    }
+                }
 
-    private fun dummyData(): List<Profile> {
-        val list = mutableListOf<Profile>()
-        for (i in 'a'..'z') {
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
+                is Response.Failure -> {
+                }
+
+                else -> {}
+            }
         }
-        return list
     }
 
-    override fun onFriendItemClicked(profile: Profile) {
-        "Clicked ${profile.name}".toast(requireContext())
+    override fun onFriendItemClicked(friend: FriendModel) {
     }
 
 }

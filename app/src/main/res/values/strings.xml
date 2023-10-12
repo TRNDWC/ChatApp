@@ -61,6 +61,9 @@
     <string name="refuse">Refuse</string>
     <string name="all_requests">All Requests</string>
     <string name="sent_requests">Sent Requests</string>
+    <string name="messages">Messages</string>
+    <string name="search_messages_here">Search messages here</string>
+    <string name="no_result_found">No result found</string>
 
 
 </resources>

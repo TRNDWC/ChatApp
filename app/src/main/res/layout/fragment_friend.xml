@@ -13,6 +13,14 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.27" />
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -34,48 +42,80 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.28"/>
+                app:layout_constraintVertical_bias="0.28" />
+
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="42dp"
                 android:layout_marginHorizontal="12dp"
-                android:background="@drawable/bg_search"
-                app:searchIcon="@drawable/ic_search"
-                app:queryBackground="@android:color/transparent"
-                app:iconifiedByDefault="false"
-                android:queryHint="@string/search_friends_here"
                 android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_search"
+                android:queryHint="@string/search_friends_here"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toStartOf="@+id/tv_cancel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.7"/>
+                app:queryBackground="@android:color/transparent"
+                app:searchIcon="@drawable/ic_search" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="@string/cancel_request"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/searchView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/searchView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/transparent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_profile_menu"
+                android:paddingTop="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/bg_profile_menu"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tabSelectedTextAppearance="@style/text_bold"
-                app:tabTextColor="@color/gray"
-                app:tabSelectedTextColor="#4356B4"
+                app:layout_constraintTop_toTopOf="parent"
                 app:tabGravity="fill"
-                app:tabMode="fixed" />
+                app:tabMode="fixed"
+                app:tabSelectedTextAppearance="@style/text_bold"
+                app:tabSelectedTextColor="#4356B4"
+                app:tabTextColor="@color/gray" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

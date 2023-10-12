@@ -3,6 +3,7 @@ package com.example.baseproject.ui.friend.tabs
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,18 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentAllBinding
 import com.example.baseproject.databinding.LayoutAllItemBinding
+import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.Profile
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.AllTabAdapter
 import com.example.baseproject.ui.friend.adpater.OnAllItemClickListener
+import com.example.baseproject.utils.Response
 import com.example.core.base.BaseFragment
 import com.example.core.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AllFragment :
     BaseFragment<FragmentAllBinding, FriendViewModel>(R.layout.fragment_all),
     OnAllItemClickListener {
 
-    private val viewModel: FriendViewModel by viewModels()
+    private val viewModel: FriendViewModel by viewModels({ requireParentFragment() })
     override fun getVM() = viewModel
 
     private lateinit var allTabAdapter: AllTabAdapter
@@ -50,27 +55,27 @@ class AllFragment :
     }
 
     private fun setupRecyclerView() {
-        allTabAdapter = AllTabAdapter(
-            dummyData(), this
-        )
-        binding.recyclerViewFriends.adapter = allTabAdapter
-        binding.recyclerViewFriends.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-    }
+        viewModel.mFriendModelList.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Response.Success -> {
+                    allTabAdapter = AllTabAdapter(response.data, this)
+                    binding.recyclerViewFriends.apply {
+                        adapter = allTabAdapter
+                        layoutManager = LinearLayoutManager(requireContext())
+                    }
+                }
 
-    private fun dummyData(): List<Profile> {
-        val list = mutableListOf<Profile>()
-        for (i in 'a'..'z') {
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
-            list.add(Profile(i.toString(), null, i.toString(), i.toString(), i.toString()))
+                is Response.Failure -> {
+                }
+
+                is Response.Loading -> {
+                }
+            }
         }
-        return list
     }
 
-    override fun onAllItemClicked(binding: LayoutAllItemBinding, profile: Profile) {
+
+    override fun onAllItemClicked(binding: LayoutAllItemBinding, friendModel: FriendModel) {
         binding.progressBar.progressDrawable = ContextCompat.getDrawable(
             requireContext(),
             R.drawable.custom_progressbar
@@ -79,15 +84,21 @@ class AllFragment :
             binding.txtProgress.text = getString(R.string.request_sent)
             binding.crdProgress.isLongClickable = true
             binding.txtProgress.setTextColor(Color.parseColor("#FFFFFF"))
+            viewModel.addFriend(friendModel.id)
 
         } else if (binding.txtProgress.text == getString(R.string.cancel_request)) {
             binding.txtProgress.text = getString(R.string.add_friend)
             binding.crdProgress.isLongClickable = false
             binding.txtProgress.setTextColor(Color.parseColor("#FFFFFF"))
+            viewModel.rejectFriend(friendModel.id)
+
+        } else if (binding.txtProgress.text == getString(R.string.accept)) {
+            binding.crdProgress.visibility = View.GONE
+            viewModel.acceptFriend(friendModel.id)
         }
     }
 
-    override fun onAllItemLongClicked(binding: LayoutAllItemBinding, profile: Profile) {
+    override fun onAllItemLongClicked(binding: LayoutAllItemBinding, FriendModel: FriendModel) {
         val btn = binding.crdProgress
         val bar = binding.progressBar
 
@@ -112,6 +123,4 @@ class AllFragment :
             }
         }.start()
     }
-
-
 }

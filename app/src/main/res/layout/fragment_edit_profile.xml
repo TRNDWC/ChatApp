@@ -90,8 +90,6 @@
                 android:id="@+id/img_avatar"
                 android:layout_width="150dp"
                 android:layout_height="200dp"
-                app:civ_border_width="@dimen/_1dp"
-                app:civ_border_color="@color/black"
                 android:src="@drawable/ic_user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
