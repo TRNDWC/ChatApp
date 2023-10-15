@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/room_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="start">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="3dp"
+            android:paddingEnd="12dp"
+            >
+
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="9dp"
+                android:background="@drawable/circle"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_content"
+                app:layout_constraintVertical_bias="1" />
+
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:background="@drawable/bg_message_received"
+                android:maxWidth="285dp"
+                android:padding="16dp"
+                android:text="Room name here can be long or short to test the layout of the room item"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_avatar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginEnd="12dp"
+            android:text="12:00"
+            android:textColor="#999"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+</layout>

@@ -62,4 +62,5 @@
     <string name="messages">Tin nhắn</string>
     <string name="search_messages_here">Tìm kiếm tin nhắn</string>
     <string name="no_result_found">Không tìm thấy kết quả phù hợp</string>
+    <string name="type_a_message">Nhập tin nhắn</string>
 </resources>

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentSearchFriendBinding
 import com.example.baseproject.model.FriendModel
+import com.example.baseproject.navigation.AppNavigation
+import com.example.baseproject.ui.chat.ChatFragment
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.FriendTabAdapter
 import com.example.baseproject.ui.friend.adpater.OnFriendItemClicked
@@ -15,6 +17,7 @@ import com.example.baseproject.ui.friend.adpater.SearchFriendAdapter
 import com.example.core.base.BaseFragment
 import com.example.core.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFriendFragment :
@@ -26,6 +29,9 @@ class SearchFriendFragment :
 
     private lateinit var searchFriendAdapter: SearchFriendAdapter
     private lateinit var friendList: List<FriendModel>
+
+    @Inject
+    lateinit var appNavigation: AppNavigation
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -88,7 +94,9 @@ class SearchFriendFragment :
     }
 
     override fun onFriendItemClicked(friend: FriendModel) {
-        "${friend.name} clicked".toast(requireContext())
+        appNavigation.openChatScreen(
+            null
+        )
     }
 
     private fun getFilteredList(list: List<FriendModel>, query: String): List<FriendModel> {

@@ -14,6 +14,7 @@ import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentAllBinding
 import com.example.baseproject.databinding.LayoutAllItemBinding
 import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.MessageType
 import com.example.baseproject.model.Profile
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.AllTabAdapter

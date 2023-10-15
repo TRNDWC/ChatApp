@@ -1,5 +1,6 @@
 package com.example.baseproject.ui.friend
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +29,6 @@ class FriendFragment :
     private val viewModel: FriendViewModel by viewModels()
     override fun getVM() = viewModel
 
-
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         setupViewPager()
@@ -37,11 +37,16 @@ class FriendFragment :
         if (childFragmentManager.backStackEntryCount > 0) {
             childFragmentManager.popBackStack()
         }
+
+        for (i in 0..2) {
+            setUpTabLayout(i)
+        }
+
     }
 
     override fun bindingStateView() {
         super.bindingStateView()
-//        chấm đỏ báo hiệu có data thay đổi ở tab request
+
         viewModel.numberOfResquest.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Response.Loading -> {
@@ -49,28 +54,7 @@ class FriendFragment :
                 }
 
                 is Response.Success -> {
-                    if (response.data > 0) {
-                        val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
-                        val view =
-                            LayoutInflater.from(requireContext()).inflate(R.layout.tab_layout, null)
-                        val textView = view.findViewById<TextView>(R.id.tv_tab_title)
-                        textView.text = getString(R.string.requests).uppercase()
-                        textView.typeface = boldTypeface
-                        val dot = view.findViewById<TextView>(R.id.tv_tab_notice)
-                        dot.visibility = View.VISIBLE
-                        dot.text = response.data.toString()
-                        dot.typeface = boldTypeface
-                        binding.tabs.getTabAt(2)?.customView = view
-                    } else {
-                        val view =
-                            LayoutInflater.from(requireContext()).inflate(R.layout.tab_layout, null)
-
-                        view.findViewById<TextView>(R.id.tv_tab_title).text =
-                            getString(R.string.requests).uppercase()
-
-                        view.findViewById<TextView>(R.id.tv_tab_notice).visibility = View.GONE
-
-                    }
+                    setUpTabLayout(2, response.data)
                 }
 
                 is Response.Failure -> {
@@ -91,7 +75,6 @@ class FriendFragment :
                 binding.viewPager.visibility = View.GONE
                 binding.tabs.visibility = View.GONE
                 binding.tvCancel.visibility = View.VISIBLE
-//                nếu có 1 instance của fragment search thì không tạo mới
                 if (childFragmentManager.findFragmentByTag("search") == null) {
                     childFragmentManager.beginTransaction().setCustomAnimations(
                         R.anim.slide_in_up,
@@ -104,8 +87,8 @@ class FriendFragment :
                 } else {
                     childFragmentManager.popBackStack()
                     childFragmentManager.beginTransaction().add(
-                            R.id.fragmentContainerView, SearchFriendFragment.newInstance(), "search"
-                        ).addToBackStack(null).commit()
+                        R.id.fragmentContainerView, SearchFriendFragment.newInstance(), "search"
+                    ).addToBackStack(null).commit()
                 }
             }
         }
@@ -166,6 +149,37 @@ class FriendFragment :
                 return true
             }
         })
+    }
+
+    private fun setUpTabLayout(index: Int, number: Int = 0) {
+
+        val list = listOf(
+            getString(R.string.friends),
+            getString(R.string.all),
+            getString(R.string.requests)
+        )
+
+        if (number > 0) {
+            val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            val view =
+                LayoutInflater.from(requireContext()).inflate(R.layout.tab_layout, null)
+            val textView = view.findViewById<TextView>(R.id.tv_tab_title)
+            textView.text = list[index].uppercase()
+            textView.typeface = boldTypeface
+            val dot = view.findViewById<TextView>(R.id.tv_tab_notice)
+            dot.visibility = View.VISIBLE
+            dot.text = number.toString()
+            dot.typeface = boldTypeface
+            binding.tabs.getTabAt(index)?.customView = view
+        } else {
+            val view =
+                LayoutInflater.from(requireContext()).inflate(R.layout.tab_layout, null)
+            view.findViewById<TextView>(R.id.tv_tab_title).text =
+                list[index].uppercase()
+
+            view.findViewById<TextView>(R.id.tv_tab_notice).visibility = View.GONE
+            binding.tabs.getTabAt(index)?.customView = view
+        }
     }
 
 }

@@ -11,6 +11,7 @@ import com.example.baseproject.databinding.FragmentFriendsBinding
 import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.FriendState
 import com.example.baseproject.model.Profile
+import com.example.baseproject.navigation.AppNavigation
 import com.example.baseproject.ui.friend.FriendViewModel
 import com.example.baseproject.ui.friend.adpater.FriendTabAdapter
 import com.example.baseproject.ui.friend.adpater.OnFriendItemClicked
@@ -18,6 +19,7 @@ import com.example.baseproject.utils.Response
 import com.example.core.base.BaseFragment
 import com.example.core.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FriendsFragment :
@@ -28,6 +30,8 @@ class FriendsFragment :
     override fun getVM() = viewModel
     private lateinit var friendTabAdapter: FriendTabAdapter
 
+    @Inject
+    lateinit var appNavigation: AppNavigation
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,14 +58,13 @@ class FriendsFragment :
         viewModel.mFriendModelList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Response.Success -> {
-//                    lọc ra những bạn bè đã chấp nhận
                     val listFriend = response.data.filter {
                         it.state == FriendState.FRIEND
                     }
                     friendTabAdapter = FriendTabAdapter(listFriend, this)
                     binding.recyclerViewFriends.apply {
-                        layoutManager = LinearLayoutManager(requireContext())
                         adapter = friendTabAdapter
+                        layoutManager = LinearLayoutManager(requireContext())
                     }
                 }
 
@@ -74,6 +77,8 @@ class FriendsFragment :
     }
 
     override fun onFriendItemClicked(friend: FriendModel) {
+//        open chat fragment
+        appNavigation.openChatScreen(null)
     }
 
 }
