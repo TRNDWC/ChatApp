@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.baseproject.model.FriendModel
 import com.example.baseproject.model.Profile
+import com.example.baseproject.repository.ChatRepository
 import com.example.baseproject.repository.FriendShipsRepository
 import com.example.baseproject.repository.ProfileRepository
 import com.example.baseproject.utils.Response
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FriendViewModel @Inject constructor(
     private val friendRepository: FriendShipsRepository,
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val chatRepository: ChatRepository
 ) : BaseViewModel() {
     var mFriendModelList = friendRepository.getAllFriendModel()
     var numberOfResquest = friendRepository.getNumberOfRequest()
@@ -31,9 +33,14 @@ class FriendViewModel @Inject constructor(
             friendRepository.updateFriendState(friendId, "add")
         }
     }
-    fun acceptFriend(friendId: String) {
+
+    fun acceptFriend(friend: FriendModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            friendRepository.updateFriendState(friendId, "accept")
+            friendRepository.updateFriendState(friend.id!!, "accept")
+        }
+
+        viewModelScope.launch {
+            chatRepository.setChatByFriend(friend)
         }
     }
 
@@ -42,4 +49,6 @@ class FriendViewModel @Inject constructor(
             friendRepository.updateFriendState(friendId, "reject")
         }
     }
+
+
 }

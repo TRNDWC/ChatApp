@@ -1,7 +1,6 @@
-package com.example.baseproject.authentication
+package com.example.baseproject.ui.authentication
 
 import android.graphics.Typeface
-import android.icu.text.CaseMap.Title
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString

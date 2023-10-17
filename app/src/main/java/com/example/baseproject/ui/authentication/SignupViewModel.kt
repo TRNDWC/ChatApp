@@ -1,4 +1,4 @@
-package com.example.baseproject.authentication
+package com.example.baseproject.ui.authentication
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

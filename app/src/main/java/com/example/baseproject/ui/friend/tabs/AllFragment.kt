@@ -85,17 +85,17 @@ class AllFragment :
             binding.txtProgress.text = getString(R.string.request_sent)
             binding.crdProgress.isLongClickable = true
             binding.txtProgress.setTextColor(Color.parseColor("#FFFFFF"))
-            viewModel.addFriend(friendModel.id)
+            viewModel.addFriend(friendModel.id!!)
 
         } else if (binding.txtProgress.text == getString(R.string.cancel_request)) {
             binding.txtProgress.text = getString(R.string.add_friend)
             binding.crdProgress.isLongClickable = false
             binding.txtProgress.setTextColor(Color.parseColor("#FFFFFF"))
-            viewModel.rejectFriend(friendModel.id)
+            viewModel.rejectFriend(friendModel.id!!)
 
         } else if (binding.txtProgress.text == getString(R.string.accept)) {
             binding.crdProgress.visibility = View.GONE
-            viewModel.acceptFriend(friendModel.id)
+            viewModel.acceptFriend(friendModel)
         }
     }
 

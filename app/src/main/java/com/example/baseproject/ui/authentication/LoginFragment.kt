@@ -1,4 +1,4 @@
-package com.example.baseproject.authentication
+package com.example.baseproject.ui.authentication
 
 import android.os.Bundle
 import android.text.Spannable
@@ -17,7 +17,6 @@ import com.example.baseproject.navigation.AppNavigation
 import com.example.baseproject.utils.Response
 import com.example.core.base.BaseFragment
 import com.example.core.pref.RxPreferences
-import com.example.core.utils.onTextChange
 import com.example.core.utils.setOnSafeClickListener
 import com.example.core.utils.toast
 import com.google.firebase.FirebaseNetworkException

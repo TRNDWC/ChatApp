@@ -13,4 +13,5 @@ interface ProfileRepository {
         nPhonenum: String?,
         nDOB: String?
     ): Response<Boolean>
+    fun getFriend(id: String): MutableLiveData<Response<FriendModel>>
 }

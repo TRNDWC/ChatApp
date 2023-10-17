@@ -51,10 +51,10 @@ class FriendTabAdapter(
     override fun onBindViewHolder(holder: FriendTabViewHolder, position: Int) {
         val item = mFriendList[position]
         if (position == 0 ||
-            getNameFirstChar(mFriendList[position].name) != getNameFirstChar(mFriendList[position - 1].name)
+            getNameFirstChar(mFriendList[position].name!!) != getNameFirstChar(mFriendList[position - 1].name!!)
         ) {
             holder.friendFirstChar.visibility = ViewGroup.VISIBLE
-            holder.friendFirstChar.text = getNameFirstChar(item.name)
+            holder.friendFirstChar.text = getNameFirstChar(item.name!!)
         } else {
             holder.friendFirstChar.visibility = ViewGroup.GONE
         }

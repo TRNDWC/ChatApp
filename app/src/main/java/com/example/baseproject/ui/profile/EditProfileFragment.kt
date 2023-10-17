@@ -43,9 +43,12 @@ class EditProfileFragment :
                 }
 
                 is com.example.baseproject.utils.Response.Success -> {
-                    Glide.with(requireContext())
-                        .load(response.data.profilePictureUri?.toUri())
-                        .into(binding.imgAvatar)
+                    if (response.data.profilePictureUri != null)
+                        Glide.with(requireContext())
+                            .load(response.data.profilePictureUri?.toUri())
+                            .into(binding.imgAvatar)
+                    else
+                        binding.imgAvatar.setImageResource(R.drawable.ic_profile)
                 }
             }
         }
@@ -61,7 +64,7 @@ class EditProfileFragment :
             ImagePicker.with(this)
                 .compress(1024)
                 .maxResultSize(1080, 1080)
-                .crop(12f,16f)
+                .crop(12f, 16f)
                 .createIntent { intent ->
                     startForProfileImageResult.launch(intent)
                 }
