@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.FriendState
 import com.example.baseproject.model.Profile
 import com.example.baseproject.repository.ProfileRepository
 import com.example.baseproject.utils.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.values
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
@@ -49,6 +49,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         nDOB: String?
     ): Response<Boolean> {
         return try {
+            Log.d("ProfileRepositoryImpl", "updateProfile: $nName $nProfileImage $nPhonenum $nDOB")
             var url: String? = null
             if (nProfileImage != null) {
                 val storageRef = storage.reference
@@ -57,10 +58,10 @@ class ProfileRepositoryImpl : ProfileRepository {
                 url = fileRef.downloadUrl.await().toString()
             }
             database.reference.child("users").child(auth.uid!!).child("profile").apply {
-                child("display_name").setValue(nName)
+                if (nName != "") child("display_name").setValue(nName)
                 if (url != null) child("profile_picture").setValue(url)
-                child("phone_number").setValue(nPhonenum)
-                child("DOB").setValue(nDOB)
+                if (nPhonenum != "") child("phone_number").setValue(nPhonenum)
+                if (nDOB != "") child("DOB").setValue(nDOB)
                 child("uid").setValue(auth.uid!!)
             }
             Response.Success(true)
@@ -69,4 +70,24 @@ class ProfileRepositoryImpl : ProfileRepository {
         }
     }
 
+    override fun getFriend(id: String): MutableLiveData<Response<FriendModel>> {
+        val friendResponse = MutableLiveData<Response<FriendModel>>()
+        database.reference.child("users").child(id).child("profile")
+            .addValueEventListener(object : com.google.firebase.database.ValueEventListener {
+                override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                    val friend = FriendModel(
+                        id = id,
+                        name = snapshot.child("display_name").value.toString(),
+                        profileImage = snapshot.child("profile_picture").value.toString(),
+                        state = FriendState.FRIEND
+                    )
+                    friendResponse.postValue(Response.Success(friend))
+                }
+
+                override fun onCancelled(error: com.google.firebase.database.DatabaseError) {
+                    friendResponse.postValue(Response.Failure(error.toException()))
+                }
+            })
+        return friendResponse
+    }
 }

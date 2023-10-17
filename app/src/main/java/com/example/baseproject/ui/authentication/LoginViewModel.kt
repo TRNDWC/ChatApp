@@ -1,4 +1,4 @@
-package com.example.baseproject.authentication
+package com.example.baseproject.ui.authentication
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

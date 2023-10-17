@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.baseproject.R
 import com.example.baseproject.databinding.FragmentSearchFriendBinding
 import com.example.baseproject.model.FriendModel
+import com.example.baseproject.model.FriendState
 import com.example.baseproject.navigation.AppNavigation
 import com.example.baseproject.ui.chat.ChatFragment
 import com.example.baseproject.ui.friend.FriendViewModel
@@ -94,15 +95,17 @@ class SearchFriendFragment :
     }
 
     override fun onFriendItemClicked(friend: FriendModel) {
+        val bundle = Bundle()
+        bundle.putParcelable("friend", friend)
         appNavigation.openChatScreen(
-            null
+            bundle
         )
     }
 
     private fun getFilteredList(list: List<FriendModel>, query: String): List<FriendModel> {
         val filteredList = ArrayList<FriendModel>()
         for (item in list) {
-            if (item.name.lowercase().contains(query.lowercase())) {
+            if (item.name!!.lowercase().contains(query.lowercase())) {
                 filteredList.add(item)
             }
         }

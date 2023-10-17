@@ -1,8 +1,6 @@
 package com.example.baseproject.model
 
-import java.sql.Time
-
-sealed class MessageType{
+sealed class MessageType {
     object TEXT : MessageType()
     object IMAGE : MessageType()
     object VIDEO : MessageType()
@@ -24,7 +22,7 @@ sealed class MessageType{
     object NONE : MessageType()
 
     override fun toString(): String {
-        return when(this){
+        return when (this) {
             TEXT -> "text"
             IMAGE -> "image"
             VIDEO -> "video"
@@ -47,9 +45,9 @@ sealed class MessageType{
         }
     }
 
-    companion object{
-        fun fromString(string: String): MessageType{
-            return when(string){
+    companion object {
+        fun fromString(string: String): MessageType {
+            return when (string) {
                 "text" -> TEXT
                 "image" -> IMAGE
                 "video" -> VIDEO
@@ -74,34 +72,22 @@ sealed class MessageType{
     }
 }
 
-sealed class MessageStatus{
-    object SENDING : MessageStatus()
+sealed class MessageStatus {
     object SENT : MessageStatus()
-    object DELIVERED : MessageStatus()
     object RECEIVED : MessageStatus()
-    object FAILED : MessageStatus()
-    object NONE : MessageStatus()
 
     override fun toString(): String {
-        return when(this){
-            SENDING -> "sending"
+        return when (this) {
             SENT -> "sent"
-            DELIVERED -> "delivered"
             RECEIVED -> "received"
-            FAILED -> "failed"
-            NONE -> "none"
         }
     }
 
-    companion object{
-        fun fromString(string: String): MessageStatus{
-            return when(string){
-                "sending" -> SENDING
-                "sent" -> SENT
-                "delivered" -> DELIVERED
+    companion object {
+        fun fromString(string: String): MessageStatus {
+            return when (string) {
                 "received" -> RECEIVED
-                "failed" -> FAILED
-                else -> NONE
+                else -> SENT
             }
         }
     }
@@ -109,11 +95,11 @@ sealed class MessageStatus{
 
 class Message(
     val id: String,
-    val senderId: String,
-    val roomId : String,
+    val receivedId: String,
+    val chatId: String,
     val content: String,
-    val messageTime: Long,
     var messageStatus: MessageStatus,
     val messageType: MessageType,
+    val messageTime: Long,
 ) {
 }

@@ -31,7 +31,6 @@ class FriendShipsRepositoryImpl : FriendShipsRepository {
                                     .child("profile_picture").value.toString(),
                                 state = FriendState.NONE
                             )
-                            Log.d("Friend", friend.name)
                             friendList.add(friend)
                         }
                     }

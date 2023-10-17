@@ -1,8 +1,7 @@
 package com.example.baseproject.model
 
-class Room(
+class Member(
     val id: String,
     val name: String,
-    val image: String?,
-    val lastMessage: Message?,
+    val profileImage: String?,
 )

@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.baseproject.authentication.LoginFragment"
+        android:name="com.example.baseproject.ui.authentication.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.baseproject.authentication.SignupFragment"
+        android:name="com.example.baseproject.ui.authentication.SignupFragment"
         android:label="SignupFragment"
         tools:layout="@layout/fragment_signup" >
         <action

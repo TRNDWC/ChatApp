@@ -70,10 +70,10 @@ class AllTabAdapter(
         val item = mProfileList[position]
 
         if (position == 0 ||
-            getNameFirstChar(mProfileList[position].name) != getNameFirstChar(mProfileList[position - 1].name)
+            getNameFirstChar(mProfileList[position].name!!) != getNameFirstChar(mProfileList[position - 1].name!!)
         ) {
             holder.friendFirstChar.visibility = ViewGroup.VISIBLE
-            holder.friendFirstChar.text = getNameFirstChar(item.name)
+            holder.friendFirstChar.text = getNameFirstChar(item.name!!)
         } else {
             holder.friendFirstChar.visibility = ViewGroup.GONE
         }

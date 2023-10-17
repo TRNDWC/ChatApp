@@ -77,8 +77,9 @@ class FriendsFragment :
     }
 
     override fun onFriendItemClicked(friend: FriendModel) {
-//        open chat fragment
-        appNavigation.openChatScreen(null)
+        val bundle = Bundle()
+        bundle.putParcelable("friend", friend)
+        appNavigation.openChatScreen(bundle)
     }
 
 }

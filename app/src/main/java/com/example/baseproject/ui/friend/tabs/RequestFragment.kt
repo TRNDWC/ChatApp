@@ -83,15 +83,15 @@ class RequestFragment :
     override fun onItemClicked(view: LayoutRequestItemBinding, item: FriendModel) {
         when (view.txtProgress.text) {
             getString(R.string.accept) -> {
-                viewModel.acceptFriend(item.id)
+                viewModel.acceptFriend(item)
             }
 
             getString(R.string.cancel_request) -> {
-                viewModel.rejectFriend(item.id)
+                viewModel.rejectFriend(item.id!!)
             }
 
             else -> {
-                viewModel.rejectFriend(item.id)
+                viewModel.rejectFriend(item.id!!)
             }
         }
         view.crdProgress.isClickable = false
