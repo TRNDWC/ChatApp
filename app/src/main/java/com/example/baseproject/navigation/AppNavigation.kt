@@ -19,4 +19,5 @@ interface AppNavigation : BaseNavigator {
 
     fun openChatScreen(bundle: Bundle? = null)
 
+
 }

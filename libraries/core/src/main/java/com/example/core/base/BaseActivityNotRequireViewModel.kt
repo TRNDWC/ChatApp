@@ -44,18 +44,33 @@ abstract class BaseActivityNotRequireViewModel<BD : ViewDataBinding> : AppCompat
     }
 
     /**
-     * Close SoftKeyboard when user click out of EditText
+     * Close SoftKeyboard when user click out of EditText except for scrolling RecyclerView
      */
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+//        nếu là srcoll thì ko close keyboard
         if (event.action == MotionEvent.ACTION_DOWN) {
-            val v = currentFocus
-            if (v is EditText) {
-                val outRect = Rect()
-                v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    v.clearFocus()
+            val view = currentFocus
+            if (view is EditText) {
+                val rect = Rect()
+                view.getGlobalVisibleRect(rect)
+                val rawX = event.rawX.toInt()
+                val rawY = event.rawY.toInt()
+                if (!rect.contains(rawX, rawY)) {
+                    view.clearFocus()
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+            }
+
+            if (view is androidx.recyclerview.widget.RecyclerView) {
+                val rect = Rect()
+                view.getGlobalVisibleRect(rect)
+                val rawX = event.rawX.toInt()
+                val rawY = event.rawY.toInt()
+                if (!rect.contains(rawX, rawY)) {
+                    view.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             }
         }

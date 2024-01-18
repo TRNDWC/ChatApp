@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.baseproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -15,15 +15,15 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:targetApi="31">
 
         <activity
             android:name=".container.MainActivity"
             android:exported="true"
+            android:isScrollContainer="true"
             android:launchMode="singleTask"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustResize"
-            android:isScrollContainer="true">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

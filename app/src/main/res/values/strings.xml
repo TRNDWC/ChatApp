@@ -65,6 +65,9 @@
     <string name="search_messages_here">Search messages here</string>
     <string name="no_result_found">No result found</string>
     <string name="type_a_message">Type a message</string>
-
-
+    <string name="you_sent_an_image">Sent an image</string>
+    <string name="send">Send</string>
+    <string name="request_permission">Request Permission</string>
+    <string name="you_sent_an_emoji">Sent an emoji</string>
+    <string name="you">You</string>
 </resources>

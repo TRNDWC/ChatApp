@@ -102,4 +102,9 @@ class Message(
     val messageType: MessageType,
     val messageTime: Long,
 ) {
+    constructor() : this("", "", "", "", MessageStatus.SENT, MessageType.TEXT, 0)
+
+    override fun toString(): String {
+        return "Message(id='$id', receivedId='$receivedId', chatId='$chatId', content='$content', messageStatus=$messageStatus, messageType=$messageType, messageTime=$messageTime)"
+    }
 }

@@ -25,16 +25,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivityNotRequireViewModel<ActivityMainBinding>(), DemoDialogListener {
-
     @Inject
     lateinit var appNavigation: AppNavigation
-
     @Inject
     lateinit var networkConnectionManager: NetworkConnectionManager
-
     @Inject
     lateinit var rxPreferences: RxPreferences
-
     var sharedPreferences: SharedPrefs? = null
 
     override val layoutId = R.layout.activity_main

@@ -39,5 +39,4 @@ class AppNavigatorImpl @Inject constructor() : BaseNavigatorImpl(),
         openScreen(R.id.action_homeFragment_to_chatFragment, bundle)
     }
 
-
 }
