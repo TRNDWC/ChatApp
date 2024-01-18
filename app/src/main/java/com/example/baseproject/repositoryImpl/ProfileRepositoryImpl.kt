@@ -57,6 +57,10 @@ class ProfileRepositoryImpl : ProfileRepository {
                 fileRef.putFile(nProfileImage.toUri()).await()
                 url = fileRef.downloadUrl.await().toString()
             }
+
+            if (nProfileImage != null) {
+                Log.d("ProfileRepositoryImpl", "updateProfile: ${nProfileImage.toUri()}")
+            }
             database.reference.child("users").child(auth.uid!!).child("profile").apply {
                 if (nName != "") child("display_name").setValue(nName)
                 if (url != null) child("profile_picture").setValue(url)

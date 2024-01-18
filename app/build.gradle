@@ -105,4 +105,10 @@ dependencies {
     //image picker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
 
+    //gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+//    retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
 }

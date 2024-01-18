@@ -63,4 +63,8 @@
     <string name="search_messages_here">Tìm kiếm tin nhắn</string>
     <string name="no_result_found">Không tìm thấy kết quả phù hợp</string>
     <string name="type_a_message">Nhập tin nhắn</string>
+    <string name="you_sent_an_image">Đã gửi 1 ảnh</string>
+    <string name="you_sent_an_emoji">Đã gửi 1 nhãn dán</string>
+    <string name="you">Bạn</string>
+    <string name="send">Gửi</string>
 </resources>

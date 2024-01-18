@@ -20,7 +20,6 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
     apply from: rootProject.file('dependencies.gradle')
-
 }
 
 task clean(type: Delete) {

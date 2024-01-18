@@ -101,7 +101,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
                 } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     etEmail.error = getString(R.string.invalid_email_address)
                 } else {
-                    viewModel.setValidState(isValidEmail = true)
+                    etEmail.error = null
                 }
             }
             etPassword.validate { password ->
@@ -112,7 +112,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
                         getString(R.string.password_must_be_at_least_8_characters)
                 } else {
                     etPassword.error = null
-                    viewModel.setValidState(isValidPassword = true)
                 }
             }
         }
@@ -163,14 +162,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(R.layou
     override fun setOnClick() {
         super.setOnClick()
         binding.btnLogin.setOnSafeClickListener {
-            viewModel.validator.observe(viewLifecycleOwner) { validator ->
-                if (validator) {
-                    viewModel.signIn(
-                        binding.etEmail.text.toString(),
-                        binding.etPassword.text.toString()
-                    )
-                }
-            }
+            viewModel.signIn(
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString()
+            )
         }
         lifecycleScope.launch {
             rxPreferences.setEmail(binding.etEmail.text.toString())

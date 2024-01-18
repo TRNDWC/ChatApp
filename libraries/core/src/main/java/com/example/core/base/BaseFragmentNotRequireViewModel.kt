@@ -101,5 +101,4 @@ abstract class BaseFragmentNotRequireViewModel<BD : ViewDataBinding>(@LayoutRes 
 //            .setNegativeButton(R.string.cancel, onNegative)
 //            .show()
 //    }
-
 }

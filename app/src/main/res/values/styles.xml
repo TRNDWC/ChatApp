@@ -22,7 +22,7 @@
     <style name="roundedImageView" parent="">
         <!--        image view with rounded corners and gradient stroke-->
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">10%</item>
         <item name="strokeColor">@color/color_gradient</item>
         <item name="strokeWidth">2dp</item>
     </style>
